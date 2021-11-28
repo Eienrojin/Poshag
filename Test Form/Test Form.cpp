@@ -1,53 +1,57 @@
 ﻿#include <iostream>
 #include <string>
+
 #include "windows.h"
+#include "Main.h"
+#include "Attack.cpp"
+#include "Functions.cpp"
+
+
 using namespace std;
 
 //variables
 char answer;
     //player info
-    int hp = 32;
+    int playerHP = 32;
     int fatigue = 100;
 
 //functions
 void mainMenu();
-void acttest();
-void actattack();
-
-//Перенести атаку игрока и враго в отдельный файл
-//Дописать логику использования fatigue
-
+void actOne();
+void actAttack();
 
 int main()
 {
     setlocale(LC_ALL, "rus");
     
+    //interface
     mainMenu();
 
-    acttest();
-    actattack();
+    //story
+    actOne();
+    actAttack();
 
     cout << "\n\n\n\n\nКонец.";
 }
 
 void mainMenu()
 {
-    for (int i = 0; i < 49; i++)
-    {
-        cout << "/";
-    }
-    cout << endl << "/\t\t" << "\t\t\t\t/";
-    cout << endl << "/\t" << "Добро пожаловать в тестовый говнокод." << "\t/";
-    cout << endl << "/\t\t" << "\t\t\t\t/" << endl;
-    for (int i = 0; i < 49; i++)
-    {
-        cout << "/";
-    }
 
+    std::cout << R"(
+ ________  ________  ________  ___  ___  ________  ________     
+|\   __  \|\   __  \|\   ____\|\  \|\  \|\   __  \|\   ____\    
+\ \  \|\  \ \  \|\  \ \  \___|\ \  \\\  \ \  \|\  \ \  \___|    
+ \ \   ____\ \  \\\  \ \_____  \ \   __  \ \   __  \ \  \  ___  
+  \ \  \___|\ \  \\\  \|____|\  \ \  \ \  \ \  \ \  \ \  \|\  \ 
+   \ \__\    \ \_______\____\_\  \ \__\ \__\ \__\ \__\ \_______\
+    \|__|     \|_______|\_________\|__|\|__|\|__|\|__|\|_______|
+                       \|_________|                                     
+)" << '\n';
 
     for (;;)
     {
-        cout << endl << "\n1 Начать пошаг" <<
+        cout << endl 
+            << "\n1 Начать пошаг"
             "\n2 Правила"
             "\n3 Выход" << endl;
 
@@ -74,12 +78,12 @@ void mainMenu()
 
 }
 
-void acttest()
+void actOne()
 {
     cout << "Ваш корабль сломался во время шторма, вас выбросило на берег, где вы нашли пещеру." 
         << "\nОставшись на ночёвку, вы развели костёр и мелкий проход, через который вы забрались в пещеру - завалило."
         << "\nОстается идти только вперед через глубины.";
-    Sleep(2000);
+    /*Sleep(2000);*/
     cout << endl << "\nВы смотрите по сторонам. Сзади вас заваленный проход. По бокам только стены и костёр. Спереди - неизвестность.";
 
     for (;;)
@@ -104,10 +108,9 @@ void acttest()
     }
 }
 
-void actattack()
+void actAttack()
 {
     int ratHP = 20;
-    int ratFatigue = 10;
 
     cout << "\nПройдя вперёд вы видите крысу. Люди в этих краях называют их Моргенами. \nВас заметили, придётся драться с Моргеном" << endl;
 
@@ -116,24 +119,26 @@ void actattack()
                 cout << endl << "\nЧто вы хотите сделать? \n1. Сделать сильный удар\n2. Ударить слабо." << endl;
                 cin >> answer;
 
-                cout << "Ваше здоровье = " << hp << endl;
+                cout << "Ваше здоровье = " << playerHP << endl;
                 cout << "Здоровье врага = " << ratHP << endl;
 
                 switch (answer)
                 {
                 default:
                     cout << endl << "Да, запрещенные приёмы всё еще под запретом. Выбирайте из того, что у вас есть." << endl;
+                    playerHP -= ratAttack();
+                    break;
                 case '1':
                     cout << "Вы сделали ОДИН удар и крыса упала замертво. Неудивительно" << endl;
                     ratHP -= ratHP;
                     break;
                 case '2':
                     cout << "Вы, кажется, погладили крысу. Ей понравилось" << endl;
-                    hp = hp - (rand() % 3);
-                    ratHP = ratHP - (rand() % 5);
+                    playerHP -= ratAttack();
+                    ratHP -= playerAttack();
                     break;
                 }
-                    if (hp <= 0)
+                    if (playerHP <= 0)
                     {
                         cout << "\nДа... Вас победил Морген. И зачем вас взяли на задание?" << endl;
                         break;
@@ -144,4 +149,5 @@ void actattack()
                         break;
                     }
             }
+    fatigue = restFullFatigue();
 }
