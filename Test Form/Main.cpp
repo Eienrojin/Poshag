@@ -31,6 +31,9 @@ int main()
     actOne();
     actAttack();
 
+    //tech
+    system("pause");
+
     cout << "\n\n\n\n\nКонец.";
 }
 

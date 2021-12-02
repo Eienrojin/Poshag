@@ -24,6 +24,7 @@
     <ProjectGuid>{ea6568db-80d5-4193-8dde-f9d0f12b2f43}</ProjectGuid>
     <RootNamespace>TestForm</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Poshag</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
